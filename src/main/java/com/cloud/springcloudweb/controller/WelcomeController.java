@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WelcomeController {
 
-    @Value("${server.welcome.message}")
+    //@Value("${server.welcome.message}")
     private String welcomeMessage;
 
     @Autowired

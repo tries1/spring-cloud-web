@@ -1,7 +1,19 @@
 management.endpoints.web.exposure.include: refresh
 
+logging:
+  level:
+    root: INFO
+  pattern:
+    console: '%date - %-5p %t %-25logger{5} %F:%L %m%n'
+    file: '%date - %-5p %t %-25logger{5} %F:%L %m%n'
+  file:
+    path: logs/application.log
+    max-history: 1
+    max-size: 10
+
 ---
 #Dev
+
 spring:
   profiles: dev
 
@@ -9,3 +21,7 @@ spring:
       url: jdbc:mysql://localhost:3306/spring
       username: spring
       password: spring
+
+logging:
+  level:
+    com.cloud.springcloudweb: DEBUG

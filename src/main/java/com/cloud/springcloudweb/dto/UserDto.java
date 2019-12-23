@@ -1,7 +1,6 @@
 package com.cloud.springcloudweb.dto;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import org.springframework.validation.annotation.Validated;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,13 +9,12 @@ import lombok.ToString;
 
 @Getter
 @ToString
+@Validated
 @NoArgsConstructor
 public class UserDto {
 
-    @Min(1)
     private Long id;
 
-    @NotEmpty
     private String name;
 
     @Builder

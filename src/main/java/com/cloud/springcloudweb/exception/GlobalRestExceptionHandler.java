@@ -1,13 +1,12 @@
 package com.cloud.springcloudweb.exception;
 
-import com.cloud.springcloudweb.dto.ErrorResponseDTO;
+import com.cloud.springcloudweb.dto.ErrorResponseDto;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+import org.springframework.web.server.ResponseStatusException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,20 +16,20 @@ public class GlobalRestExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected ErrorResponseDTO exceptionHandle(Exception e){
-        return ErrorResponseDTO.builder()
+    protected ErrorResponseDto exceptionHandle(Exception e){
+        return ErrorResponseDto.builder()
                 .message("오류가 발생하였습니다. : " + e.getMessage())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .build();
 
     }
 
-    @ExceptionHandler(BindException.class)
+    @ExceptionHandler(ResponseStatusException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ErrorResponseDTO bindExceptionHandle(BindException e){
-        log.info("e.getBindingResult() : {}", e.getBindingResult());
-        return ErrorResponseDTO.builder()
-                .message("BindException. : " + e.getMessage())
+    protected ErrorResponseDto responseStatusExceptionHandle(ResponseStatusException e){
+        log.info("e.getStatus() : {}", e.getStatus());
+        return ErrorResponseDto.builder()
+                .message("ResponseStatusException. : " + e.getMessage())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .build();
 
@@ -38,8 +37,8 @@ public class GlobalRestExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    protected ErrorResponseDTO userNotFoundExceptionHandle(UserNotFoundException e){
-        return ErrorResponseDTO.builder()
+    protected ErrorResponseDto userNotFoundExceptionHandle(UserNotFoundException e){
+        return ErrorResponseDto.builder()
                 .message(e.getMessage())
                 .status(HttpStatus.NOT_FOUND.value())
                 .build();

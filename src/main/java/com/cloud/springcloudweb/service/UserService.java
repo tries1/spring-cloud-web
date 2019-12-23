@@ -21,13 +21,15 @@ public class UserService {
     private final UserRepository userRepository;
 
     public Flux<User> findAll() {
-        return Flux.fromIterable(userRepository.findAll());
+        return Flux.fromIterable(userRepository.findAll())
+                .subscribeOn(Schedulers.elastic());
     }
 
     public Mono<User> find(Long id) {
         return Mono.just(userRepository.findById(id))
                 .filter(Optional::isPresent)
-                .map(Optional::get)
+                //.map(Optional::get)
+                .flatMap(user -> Mono.just(user.get()))
                 .onErrorResume(e -> Mono.error(new UserNotFoundException(id)))
                 .subscribeOn(Schedulers.elastic());
     }
@@ -40,6 +42,7 @@ public class UserService {
         return Mono.just(UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
-                .build());
+                .build())
+                .subscribeOn(Schedulers.elastic());
     }
 }

@@ -28,8 +28,7 @@ public class UserService {
     public Mono<User> find(Long id) {
         return Mono.just(userRepository.findById(id))
                 .filter(Optional::isPresent)
-                //.map(Optional::get)
-                .flatMap(user -> Mono.just(user.get()))
+                .map(Optional::get)
                 .onErrorResume(e -> Mono.error(new UserNotFoundException(id)))
                 .subscribeOn(Schedulers.elastic());
     }

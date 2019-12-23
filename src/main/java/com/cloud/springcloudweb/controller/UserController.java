@@ -56,19 +56,12 @@ public class UserController {
             userDtoValidator.validate(user, errors);
 
             if (errors.hasErrors()) {
-                //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errors.getAllErrors().toString());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errors.getAllErrors().toString());
             } else{
                 userService.save(user);
-                //return userService.save(user);
             }
 
             return user;
         });
-
-        /*return userDto
-                .map(dto -> userService.save(dto))
-                //.onErrorMap(throwable -> new RuntimeException(throwable.getMessage()))
-                .onErrorReturn(Mono.just(new UserDto()));*/
     }
 }

@@ -33,15 +33,9 @@ public class UserService {
                 .subscribeOn(Schedulers.elastic());
     }
 
-    public Mono<UserDto> save(UserDto userDto) {
-        User user =  userRepository.save(User.builder()
-                .name(userDto.getName())
-                .build());
-
-        return Mono.just(UserDto.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .build())
+    public Mono<UserDto> save(Mono<UserDto> userDto) {
+        return userDto
+                .doOnNext(it -> userRepository.save(User.builder().name(it.getName()).build()))
                 .subscribeOn(Schedulers.elastic());
     }
 }

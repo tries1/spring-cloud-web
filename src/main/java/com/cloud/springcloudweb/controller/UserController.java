@@ -27,8 +27,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@RestController
-@RequestMapping("api/user")
+//@RestController
+//@RequestMapping("api/user")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
     private final UserService userService;
@@ -59,7 +59,7 @@ public class UserController {
             if (errors.hasErrors()) {
                 throw new ValidationException(errors);
             } else{
-                userService.save(user);
+                //userService.save(user);
             }
 
             return user;

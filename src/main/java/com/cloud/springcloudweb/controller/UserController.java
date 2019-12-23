@@ -2,6 +2,7 @@ package com.cloud.springcloudweb.controller;
 
 import com.cloud.springcloudweb.dto.UserDto;
 import com.cloud.springcloudweb.exception.UserNotFoundException;
+import com.cloud.springcloudweb.exception.ValidationException;
 import com.cloud.springcloudweb.model.User;
 import com.cloud.springcloudweb.service.UserService;
 import com.cloud.springcloudweb.validator.UserDtoValidator;
@@ -56,7 +57,7 @@ public class UserController {
             userDtoValidator.validate(user, errors);
 
             if (errors.hasErrors()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errors.getAllErrors().toString());
+                throw new ValidationException(errors);
             } else{
                 userService.save(user);
             }

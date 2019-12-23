@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.server.ResponseStatusException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,12 +23,11 @@ public class GlobalRestExceptionHandler {
 
     }
 
-    @ExceptionHandler(ResponseStatusException.class)
+    @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ErrorResponseDto responseStatusExceptionHandle(ResponseStatusException e){
-        log.info("e.getStatus() : {}", e.getStatus());
+    protected ErrorResponseDto responseStatusExceptionHandle(ValidationException e){
         return ErrorResponseDto.builder()
-                .message("ResponseStatusException. : " + e.getMessage())
+                .message("입력값을 확인해주세요. : " + e.getMessage())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .build();
 

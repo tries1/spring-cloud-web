@@ -17,7 +17,7 @@ public class UserDtoValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required", "name은 필수입니다.");
 
         UserDto request = (UserDto) target;
         if (Objects.isNull(request.getId()) || request.getId() < 0) {

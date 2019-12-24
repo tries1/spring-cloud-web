@@ -1,6 +1,6 @@
 package com.cloud.springcloudweb.validator;
 
-import com.cloud.springcloudweb.dto.UserDto;
+import com.cloud.springcloudweb.domain.dto.UserDto;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

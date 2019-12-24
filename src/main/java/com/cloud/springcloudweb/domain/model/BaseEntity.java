@@ -1,4 +1,4 @@
-package com.cloud.springcloudweb.model;
+package com.cloud.springcloudweb.domain.model;
 
 import java.time.LocalDateTime;
 

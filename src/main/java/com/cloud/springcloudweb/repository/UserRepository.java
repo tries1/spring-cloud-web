@@ -1,6 +1,6 @@
 package com.cloud.springcloudweb.repository;
 
-import com.cloud.springcloudweb.model.User;
+import com.cloud.springcloudweb.domain.model.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,14 +1,13 @@
 package com.cloud.springcloudweb.controller;
 
-import com.cloud.springcloudweb.dto.UserDto;
+import com.cloud.springcloudweb.domain.dto.UserDto;
 import com.cloud.springcloudweb.exception.UserNotFoundException;
 import com.cloud.springcloudweb.exception.ValidationException;
-import com.cloud.springcloudweb.model.User;
+import com.cloud.springcloudweb.domain.model.User;
 import com.cloud.springcloudweb.service.UserService;
 import com.cloud.springcloudweb.validator.UserDtoValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
@@ -17,9 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +42,7 @@ public class UserController {
     /**
      * An Errors/BindingResult argument is expected immediately after the @ModelAttribute argument to which it applies.
      * For @RequestBody and @RequestPart arguments, please declare them with a reactive type wrapper and use its onError operators to handle WebExchangeBindException:
-     * public reactor.core.publisher.Mono com.cloud.springcloudweb.controller.UserController.saveUser(com.cloud.springcloudweb.dto.UserDto,org.springframework.validation.BindingResult) throws org.springframework.validation.BindException
+     * public reactor.core.publisher.Mono com.cloud.springcloudweb.controller.UserController.saveUser(com.cloud.springcloudweb.domain.dto.UserDto,org.springframework.validation.BindingResult) throws org.springframework.validation.BindException
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Mono<UserDto> saveUser(@RequestBody UserDto userDto) {

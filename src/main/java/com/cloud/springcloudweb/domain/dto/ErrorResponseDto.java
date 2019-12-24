@@ -1,4 +1,4 @@
-package com.cloud.springcloudweb.dto;
+package com.cloud.springcloudweb.domain.dto;
 
 import lombok.Builder;
 import lombok.Getter;

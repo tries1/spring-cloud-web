@@ -1,6 +1,6 @@
 package com.cloud.springcloudweb.validator;
 
-import com.cloud.springcloudweb.dto.ResponseDto;
+import com.cloud.springcloudweb.domain.dto.ResponseDto;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BeanPropertyBindingResult;

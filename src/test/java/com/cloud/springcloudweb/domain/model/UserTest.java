@@ -1,4 +1,4 @@
-package com.cloud.springcloudweb.model;
+package com.cloud.springcloudweb.domain.model;
 
 import com.cloud.springcloudweb.repository.UserRepository;
 
@@ -7,7 +7,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;

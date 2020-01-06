@@ -1,47 +1,70 @@
 package com.cloud.springcloudweb.service;
 
-import com.cloud.springcloudweb.dto.UserDto;
+import com.cloud.springcloudweb.domain.dto.UserDto;
+import com.cloud.springcloudweb.domain.model.User;
 import com.cloud.springcloudweb.exception.UserNotFoundException;
-import com.cloud.springcloudweb.model.User;
+import com.cloud.springcloudweb.exception.ValidationException;
 import com.cloud.springcloudweb.repository.UserRepository;
+import com.cloud.springcloudweb.util.ValidatorUtil;
+import com.cloud.springcloudweb.validator.UserDtoValidator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
 
 import java.util.Optional;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+@Deprecated
+@Slf4j
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserService {
     private final UserRepository userRepository;
+    private final Validator userDtoValidator;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        this.userDtoValidator = new UserDtoValidator();
+    }
 
     public Flux<User> findAll() {
-        return Flux.fromIterable(userRepository.findAll())
-                .subscribeOn(Schedulers.elastic());
+        /*return Flux.fromIterable(userRepository.findAll())
+                .subscribeOn(Schedulers.elastic());*/
+
+        return Flux.empty();
     }
 
     public Mono<User> find(Long id) {
-        return Mono.just(userRepository.findById(id))
+        /*return Mono.just(userRepository.findById(id))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .onErrorResume(e -> Mono.error(new UserNotFoundException(id)))
-                .subscribeOn(Schedulers.elastic());
+                .switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+                .subscribeOn(Schedulers.elastic());*/
+
+        return Mono.empty();
     }
 
-    public Mono<UserDto> save(UserDto userDto) {
-        User user =  userRepository.save(User.builder()
-                .name(userDto.getName())
-                .build());
+    public Mono<UserDto> save(Mono<UserDto> userDto) {
+        return userDto
+                .map(user -> {
+                    Errors errors = ValidatorUtil.validate(userDtoValidator, user);
 
-        return Mono.just(UserDto.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .build())
+                    if (errors.hasErrors()) {
+                        throw new ValidationException(errors);
+                    }
+
+                    return user;
+                })
+                .doOnNext(it -> userRepository.save(User.builder().name(it.getName()).build()))
+                .doOnSuccess(it -> log.info("사용자 추가에 성공하였습니다. : {}", it.toString()))
+                .doOnError(it -> log.error("사용자 추가에 실패하였습니다. : {}", it.toString()))
                 .subscribeOn(Schedulers.elastic());
     }
 }

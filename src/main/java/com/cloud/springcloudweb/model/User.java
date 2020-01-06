@@ -1,15 +1,12 @@
 package com.cloud.springcloudweb.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Entity
-@Table(name = "users")
+//@Entity
+//@Table(name = "users")
 @NoArgsConstructor
 public class User extends BaseEntity {
 

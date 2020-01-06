@@ -3,6 +3,7 @@ management.endpoints.web.exposure.include: refresh
 logging:
   level:
     root: INFO
+    org.springframework.data.r2dbc: DEBUG
   pattern:
     console: '%date - %-5p %t %-25logger{5} %F:%L %m%n'
     file: '%date - %-5p %t %-25logger{5} %F:%L %m%n'
@@ -17,8 +18,8 @@ logging:
 spring:
   profiles: dev
 
-  datasource:
-      url: jdbc:mysql://localhost:3306/spring
+  r2dbc:
+      url: r2dbc:mysql://localhost:3306/spring
       username: spring
       password: spring
 

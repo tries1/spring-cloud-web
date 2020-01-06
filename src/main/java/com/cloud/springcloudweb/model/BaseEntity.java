@@ -1,35 +1,29 @@
 package com.cloud.springcloudweb.model;
 
-import java.time.LocalDateTime;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
+import java.time.LocalDateTime;
 
 import lombok.Getter;
 
 @Getter
-@MappedSuperclass
+//@MappedSuperclass
 public class BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @Column
+    //@Column
     protected LocalDateTime createdAt;
 
-    @Column
+    //@Column
     protected LocalDateTime updatedAt;
 
-    @Column
+    //@Column
     protected LocalDateTime deletedAt;
 
-    @PostPersist
+    //@PostPersist
     protected void onPersist(){
         LocalDateTime now = LocalDateTime.now();
 
@@ -37,7 +31,7 @@ public class BaseEntity {
         this.updatedAt = now;
     }
 
-    @PostUpdate
+    //@PostUpdate
     protected void onUpdate(){
         this.updatedAt = LocalDateTime.now();
     }

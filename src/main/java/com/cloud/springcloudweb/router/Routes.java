@@ -39,7 +39,10 @@ public class Routes {
                 .andRoute(GET("api/test2").and(accept(MediaType.APPLICATION_JSON)), testHandler::test2)
                 .andRoute(GET("api/just").and(accept(MediaType.APPLICATION_JSON)), testHandler::just)
                 .andRoute(GET("api/defer").and(accept(MediaType.APPLICATION_JSON)), testHandler::defer)
-                .andRoute(GET("api/create").and(accept(MediaType.APPLICATION_JSON)), testHandler::create);
+                .andRoute(GET("api/create").and(accept(MediaType.APPLICATION_JSON)), testHandler::create)
+                .andRoute(GET("api/zip").and(accept(MediaType.APPLICATION_JSON)), testHandler::zip)
+                .andRoute(GET("api/merge").and(accept(MediaType.APPLICATION_JSON)), testHandler::merge)
+                .andRoute(GET("api/concat").and(accept(MediaType.APPLICATION_JSON)), testHandler::concat);
     }
 
     @Bean

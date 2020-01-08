@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
@@ -42,32 +43,5 @@ public class UserHandler {
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromProducer(users, User.class));
-    }
-
-    public String time(){
-        System.out.println("time print");
-        return "time : " + Math.random() * 100000;
-    }
-
-    public Mono<ServerResponse> hot(ServerRequest serverRequest) {
-        Mono<String> mono = Mono.just(time());
-        mono.subscribe(System.out::println);
-        mono.subscribe(System.out::println);
-        mono.subscribe(System.out::println);
-        return ServerResponse
-                .ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(mono, String.class);
-    }
-
-    public Mono<ServerResponse> cold(ServerRequest serverRequest) {
-        Mono<String> mono = Mono.create(stringMonoSink -> stringMonoSink.success(time()));
-        mono.subscribe(System.out::println);
-        mono.subscribe(System.out::println);
-        mono.subscribe(System.out::println);
-        return ServerResponse
-                .ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(mono, String.class);
     }
 }

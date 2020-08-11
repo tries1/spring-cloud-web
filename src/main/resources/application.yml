@@ -1,4 +1,20 @@
-management.endpoints.web.exposure.include: refresh
+server:
+  port: 8080
+  shutdown:
+    grace-period: 20000 # 최대 20초 대기후 어플리케이션 down
+
+# actuator
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        #include: refresh
+  server:
+    port: 8888
 
 logging:
   level:
@@ -18,11 +34,11 @@ spring:
   profiles: dev
 
   datasource:
-      url: jdbc:mysql://localhost:3306/spring
-      username: spring
-      password: spring
-      hikari:
-        maximum-pool-size: 250
+    url: jdbc:mysql://localhost:3306/spring
+    username: spring
+    password: spring
+    hikari:
+      maximum-pool-size: 250
 
 logging:
   level:

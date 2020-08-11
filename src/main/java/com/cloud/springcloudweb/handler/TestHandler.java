@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import lombok.extern.slf4j.Slf4j;
@@ -100,7 +101,7 @@ public class TestHandler {
     public String time() {
         System.out.println("time print");
         try {
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(30);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -130,11 +131,13 @@ public class TestHandler {
      * @param serverRequest
      * @return
      */
+    AtomicInteger ai = new AtomicInteger(1);
     public Mono<ServerResponse> cold(ServerRequest serverRequest) {
-        Mono<String> mono = Mono.create(stringMonoSink -> stringMonoSink.success(time()));
-        mono.subscribe(System.out::println);
-        mono.subscribe(System.out::println);
-        mono.subscribe(System.out::println);
+        Mono<String> mono = Mono.create(stringMonoSink -> {
+            System.out.println("call : " + ai.getAndIncrement());
+            stringMonoSink.success(time());
+        });
+
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
